@@ -51,6 +51,10 @@ def say(ctx, msg):
 def list_admins(ctx):
     ctx.send_msg(bot_admins)
 
+@bot.command(args=0, aname="spam")
+def spam(ctx):
+    ctx.send_msg("no.")
+
 @bot.command(args=1, aname="run")
 def run(ctx, code):
     admin_check(ctx)
