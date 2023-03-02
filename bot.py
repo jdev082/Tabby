@@ -77,6 +77,16 @@ def give_tempadmin(ctx, username):
     bot_admins.append(username)
     ctx.send_msg(f"User {username} will be a bot admin until next restart!")
 
+@bot.command(args=2, aname="conf")
+def conf(ctx, conf, val):
+    admin_check(ctx)
+    if conf == "developer":
+        developer = val
+    else:
+        ctx.send_msg("Error, invalid config parameter.")
+        exit()
+    ctx.send_msg(f"Value {conf} set to {val}!")
+
 @bot.command(args=0, aname="restart")
 def restart(ctx):
     admin_check(ctx)

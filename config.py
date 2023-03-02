@@ -4,7 +4,7 @@ developer = "jdev082"
 bot_admins = [
     "jdev082", "ShowierData9978", "JoshAtticus", "MikeDEV"
 ]
-repo = "https://github.com/jdev082/Tabby"
+repo = "https://github.com/MeowerBots/Tabby"
 cat_breeds = [
     "Scottish Fold",
     "Tabby",
