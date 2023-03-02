@@ -4,8 +4,8 @@ import random
 import os
 import platform
 from details import passwordd
-from functions import admin_check
-from config import version, license, developer, bot_admins, repo, cat_breeds
+from functions import admin_check, home_check
+from config import version, license, developer, bot_admins, repo, cat_breeds, quotes
 from messages import help_msg
 
 if os.name == "nt":
@@ -42,7 +42,20 @@ def whoami(ctx):
 
 @bot.command(args=0, aname="cat")
 def cat(ctx):
+    home_check(ctx)
     ctx.send_msg(random.choice(cat_breeds))
+
+@bot.command(args=1, aname="link")
+def link(ctx, link):
+    if link == "discord":
+        ctx.send_msg("https://dsc.gg/meowermedia")
+    elif link == "forums":
+        ctx.send_msg("https://forums.meower.org")
+    elif link == "wiki":
+        ctx.send_msg("https://wiki.meower.org")
+    else:
+        ctx.send_msg("available links: forums, discord, wiki")
+    
 
 @bot.command(args=0, aname="help")
 def help(ctx):
@@ -57,6 +70,7 @@ def give_tempadmin(ctx, username):
 @bot.command(args=0, aname="restart")
 def restart(ctx):
     admin_check(ctx)
+    home_check(ctx)
     ctx.send_msg("Restarting...")
     os.execv(sys.executable, ['python3'] + sys.argv)
 
@@ -79,12 +93,15 @@ def list_admins(ctx):
 def spam(ctx):
     ctx.send_msg("no.")
 
-#@bot.command(args=1, aname="run")
-#def run(ctx, code):
-#    admin_check(ctx)
-#    out = exec(code)
-#    ctx.send_msg(code)
-#    print(out)
+@bot.command(args=1, aname="run")
+def run(ctx, code):
+    admin_check(ctx)
+    ctx.send_msg(str(exec(code)))
+
+@bot.command(args=0, aname="quote")
+def quote(ctx):
+    home_check(ctx)
+    ctx.send_msg(random.choice(quotes))
 
 @bot.command(args=0, aname="stop")
 def stop(ctx):
@@ -99,6 +116,5 @@ try:
         server="wss://server.meower.org"
     )
 except KeyboardInterrupt:
-    ctx.send_msg("The hoster of the bot has pressed CTRL + C, shutting down!")
     print("Detecting interrupt, going away now...")
     exit()
