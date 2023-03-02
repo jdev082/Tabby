@@ -47,14 +47,18 @@ def cat(ctx):
 
 @bot.command(args=1, aname="link")
 def link(ctx, link):
-    if link == "discord":
-        ctx.send_msg("https://dsc.gg/meowermedia")
-    elif link == "forums":
+    #if link == "discord":
+    #    ctx.send_msg("https://dsc.gg/meowermedia")
+    if link == "forums":
         ctx.send_msg("https://forums.meower.org")
     elif link == "wiki":
         ctx.send_msg("https://wiki.meower.org")
+    elif link == "legal":
+        ctx.send_msg("https://meower.org/legal")
+    elif link == "website":
+        ctx.send_msg("https://meower.org")
     else:
-        ctx.send_msg("available links: forums, discord, wiki")
+        ctx.send_msg("available links: forums, wiki, legal, website")
     
 
 @bot.command(args=0, aname="help")
@@ -64,6 +68,12 @@ def help(ctx):
 @bot.command(args=1, aname="give_tempadmin")
 def give_tempadmin(ctx, username):
     admin_check(ctx)
+    if username in bot_admins:
+        ctx.send_msg(f"User {username} is already a bot admin!")
+        exit()
+    if "Tabby" in username:
+        ctx.send_msg("You cannot give Tabby admin permissions!")
+        exit()
     bot_admins.append(username)
     ctx.send_msg(f"User {username} will be a bot admin until next restart!")
 
@@ -83,6 +93,9 @@ def config(ctx, var, val):
 @bot.command(args=1, aname="say")
 def say(ctx, msg):
     admin_check(ctx)
+    if "@" in msg:
+        ctx.send_msg("Disallowed character: @!")
+        exit()
     ctx.send_msg(f"{msg}")
 
 @bot.command(args=0, aname="list_admins")
