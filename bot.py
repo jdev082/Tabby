@@ -5,8 +5,10 @@ import os
 import platform
 from details import passwordd
 from functions import admin_check, home_check
-from config import version, license, developer, bot_admins, repo, cat_breeds, quotes
+from config import license, developer, bot_admins, repo, cat_breeds, quotes
 from messages import help_msg
+
+version = open('release.txt', 'r').read()
 
 if os.name == "nt":
     name = "Windows NT"
@@ -23,6 +25,15 @@ bot = Bot()
 @bot.command(args=0, aname="about")
 def about(ctx):
     ctx.send_msg(f"Tabby Version {version}, licensed with the {license} license. Developed by {developer}! You can contribute at {repo}.")
+
+@bot.command(args=1, aname="setver")
+def setver(ctx, ver):
+    admin_check(ctx)
+    os.remove('release.txt')
+    f = open("release.txt", "w")
+    f.write(ver)
+    f.close()
+    ctx.send_msg(f"Version bumped to {ver}! This change will be applied when I am restarted.")
 
 @bot.command(args=0, aname="lines")
 def lines(ctx):

@@ -1,4 +1,3 @@
-version = "1.2.0"
 license = "MIT"
 developer = "jdev082"
 bot_admins = [
