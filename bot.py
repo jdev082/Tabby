@@ -111,12 +111,14 @@ def config(ctx, var, val):
     ctx.send_msg(f"Changed value of {var} to {val}!")
     var = val
 
-@bot.command(args=1, aname="say")
-def say(ctx, msg):
-    admin_check(ctx)
-    if "@" in msg:
+@bot.command(args=2, aname="say")
+def say(ctx, msg, byp="none"):
+    home_check(ctx)
+    if "@" in msg and byp != "at":
         ctx.send_msg("Disallowed character: @!")
         exit()
+    if byp == "at":
+        admin_check(ctx)
     ctx.send_msg(f"{msg}")
 
 @bot.command(args=0, aname="list_admins")
