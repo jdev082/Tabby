@@ -79,6 +79,11 @@ def help(ctx):
 @bot.command(args=1, aname="give_tempadmin")
 def give_tempadmin(ctx, username):
     admin_check(ctx)
+    if username == "*":
+        for x in bot.wss.statedata["ulist"]["usernames"]:
+            bot_admins.append(x)
+            ctx.send_msg("All users have been given bot admin!")
+            exit()
     if username in bot_admins:
         ctx.send_msg(f"User {username} is already a bot admin!")
         exit()
@@ -113,13 +118,28 @@ def config(ctx, var, val):
 
 @bot.command(args=2, aname="say")
 def say(ctx, msg, byp="none"):
-    home_check(ctx)
+    if byp != "hm":
+        admin_check(ctx)
+        home_check(ctx)
     if "@" in msg and byp != "at":
         ctx.send_msg("Disallowed character: @!")
         exit()
     if byp == "at":
         admin_check(ctx)
     ctx.send_msg(f"{msg}")
+
+@bot.command(args=0, aname="list")
+def list(ctx):
+    list_array = bot.wss.statedata["ulist"]["usernames"]
+    list_array_string = str(list_array)
+    list_array_nolbr = list_array_string.replace('[', '')
+    list_array_norbr = list_array_nolbr.replace(']', '')
+    list_array_noquo = list_array_norbr.replace("'", "")
+    if len(list_array_noquo) > 100:
+        list_array_short = list_array_noquo[:100] + "..."
+        ctx.send_msg(f"online: {list_array_short}")
+        exit()
+    ctx.send_msg(f"online: {list_array_noquo}")
 
 @bot.command(args=0, aname="list_admins")
 def list_admins(ctx):
