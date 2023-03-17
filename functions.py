@@ -1,4 +1,4 @@
-from messages import no_perms
+from messages import no_perms, disabled
 from config import bot_admins
 
 def admin_check(ctx):
@@ -9,3 +9,7 @@ def admin_check(ctx):
 def home_check(ctx):
     if ctx.message.chat == "home":
         exit()
+
+def is_disabled(ctx):
+    ctx.send_msg(disabled)
+    exit()

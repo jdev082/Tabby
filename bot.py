@@ -4,7 +4,7 @@ import random
 import os
 import platform
 from details import passwordd
-from functions import admin_check, home_check
+from functions import admin_check, home_check, is_disabled
 from config import license, developer, bot_admins, repo, cat_breeds, quotes
 from messages import help_msg
 
@@ -20,7 +20,7 @@ relver = platform.version()
 with open("bot.py", 'r') as fp:
     lines_count = len(fp.readlines())
 
-bot = Bot()
+bot = Bot(autoreload=0)
 
 @bot.command(args=0, aname="about")
 def about(ctx):
@@ -106,7 +106,6 @@ def conf(ctx, conf, val):
 @bot.command(args=0, aname="restart")
 def restart(ctx):
     admin_check(ctx)
-    home_check(ctx)
     ctx.send_msg("Restarting...")
     os.execv(sys.executable, ['python3'] + sys.argv)
 
@@ -118,6 +117,7 @@ def config(ctx, var, val):
 
 @bot.command(args=2, aname="say")
 def say(ctx, msg, byp="none"):
+    is_disabled(ctx)
     if byp != "hm":
         admin_check(ctx)
         home_check(ctx)
