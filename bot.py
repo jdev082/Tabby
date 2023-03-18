@@ -135,10 +135,6 @@ def list(ctx):
     list_array_nolbr = list_array_string.replace('[', '')
     list_array_norbr = list_array_nolbr.replace(']', '')
     list_array_noquo = list_array_norbr.replace("'", "")
-    if len(list_array_noquo) > 100:
-        list_array_short = list_array_noquo[:100] + "..."
-        ctx.send_msg(f"online: {list_array_short}")
-        exit()
     ctx.send_msg(f"online: {list_array_noquo}")
 
 @bot.command(args=0, aname="list_admins")
