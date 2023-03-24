@@ -53,14 +53,13 @@ def whoami(ctx):
 
 @bot.command(args=0, aname="cat")
 def cat(ctx):
-    home_check(ctx)
     ctx.send_msg(random.choice(cat_breeds))
 
 @bot.command(args=1, aname="link")
-def link(ctx, link):
-    #if link == "discord":
-    #    ctx.send_msg("https://dsc.gg/meowermedia")
-    if link == "forums":
+def link(ctx, link=""):
+    if link == "discord":
+        ctx.send_msg("https://dsc.gg/meowermedia")
+    elif link == "forums":
         ctx.send_msg("https://forums.meower.org")
     elif link == "wiki":
         ctx.send_msg("https://wiki.meower.org")
@@ -68,9 +67,17 @@ def link(ctx, link):
         ctx.send_msg("https://meower.org/legal")
     elif link == "website":
         ctx.send_msg("https://meower.org")
+    #elif link == "list":
+    #    ctx.send_msg("available links: forums, wiki, legal, website")
     else:
-        ctx.send_msg("available links: forums, wiki, legal, website")
+        ctx.send_msg("available links: discord, forums, wiki, legal, website")
     
+@bot.command(args=1, aname="guide")
+def guide(ctx, guide=""):
+    if guide == "mod":
+        ctx.send_msg("To get mod on meower you must first earn Mike's trust, be 13+, and ask for mod by either asking Mike directly or emailing contact@meower.org.")
+    else:
+        ctx.send_msg("available guides: mod")
 
 @bot.command(args=0, aname="help")
 def help(ctx):
@@ -137,6 +144,10 @@ def list(ctx):
     list_array_noquo = list_array_norbr.replace("'", "")
     ctx.send_msg(f"online: {list_array_noquo}")
 
+@bot.command(args=1, aname="youtube")
+def youtube(ctx, user="null"):
+    ctx.send_msg(f"Hey guys! {user} here, welcome back to yet another video!")
+
 @bot.command(args=0, aname="list_admins")
 def list_admins(ctx):
     ctx.send_msg(bot_admins)
@@ -160,6 +171,11 @@ def stop(ctx):
     admin_check(ctx)
     ctx.send_msg("Stopping...")
     os._exit(0)
+
+def login(bot=bot):
+   bot.send_msg(f"Hello, I am Tabby v{version}, and I am a utility bot for Meower. To use me, type @Tabby help for a list of commands.")
+
+bot.callback(login)
 
 try:
     bot.run(
