@@ -1,4 +1,9 @@
 no_perms = "Only bot admins can run this command!"
 
-help_msg = "admin only:\nconfig\nstop\n[LC] restart\ngive_tempadmin\nrun\n\nuser commands:\nabout, help, whoami, spam, lines, system, link, list\n\nlivechat only user commands:\ncat, quote, say"
+help_msg = """
+admin: setver, give_tempadmin, conf, restart, config, run, stop
+
+user: about, help, list, define, cat, [LC] quote, lines, system, whoami,
+cat, link, guide, youtube, spam.
+"""
 disabled = "This command has been temporarily disabled!"
