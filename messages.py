@@ -5,5 +5,7 @@ admin: setver, give_tempadmin, restart, stop
 
 user: about, help, list, define, cat, [LC] quote, lines, system, whoami,
 cat, link, guide, youtube, spam, suggest
+
+games: rps, gayometer, funny
 """
 disabled = "This command has been temporarily disabled!"

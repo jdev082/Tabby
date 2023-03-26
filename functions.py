@@ -8,6 +8,7 @@ def admin_check(ctx):
 
 def home_check(ctx):
     if ctx.message.chat == "home":
+        ctx.send_msg("this command can't be used in home!")
         exit()
 
 def is_disabled(ctx):

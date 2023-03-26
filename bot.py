@@ -8,6 +8,7 @@ from functions import admin_check, home_check, is_disabled
 from config import license, developer, bot_admins, repo, cat_breeds, quotes, debug
 from messages import help_msg
 from PyDictionary import PyDictionary
+from random import randint
 dictionary=PyDictionary()
 
 version = open('release.txt', 'r').read()
@@ -76,6 +77,21 @@ def define(ctx, word, type="noun"):
         ctx.send_msg("Invalid type.")
     ctx.send_msg(f"{word} means {' '.join(meaning)}")
 
+@bot.command(args=3, aname="funny")
+def funny(ctx, thing="help", user="", what=""):
+    if thing == "does":
+        answers = ["does", "does not"]
+    elif thing == "isa":
+        answers = ["is", "is not"]
+    elif thing == "help":
+        ctx.send_msg("@Tabby funny isa/does user custom")        
+    answer = random.choice(answers)
+    ctx.send_msg(f"{user} {answer} {what}")
+    
+@bot.command(args=1, aname="gayometer")
+def gayometer(ctx, user):
+    home_check(ctx)
+    ctx.send_msg(f"{user} is {randint(1, 100)}% gay!")
 
 @bot.command(args=0, aname="system")
 def system(ctx):
@@ -88,6 +104,31 @@ def whoami(ctx):
     else:
         is_bot_admin = "No"
     ctx.send_msg(f'Username: {ctx.user.username}\nQuote: {ctx.user.quote}\nProfile Picture: {ctx.user.pfp}\nLevel: {ctx.user.level}\nBot Admin?: {is_bot_admin}')
+
+plays = ["rock", "paper", "scissors"]
+@bot.command(args=1, aname="rps")
+def rps(ctx, play):
+    home_check(ctx)
+    bot_play = random.choice(plays)
+    if bot_play == "scissors":
+        if play == "rock":
+            ctx.send_msg("you win!")
+        if play == "paper":
+            ctx.send_msg("you lose!")
+    elif bot_play == "rock":
+        if play == "scissors":
+            ctx.send_msg("you lose!")
+        if play == "paper":
+            ctx.send_msg("you win!")
+    elif bot_play == "paper":
+        if play == "scissors":
+            ctx.send_msg("you win!")
+        if play == "rock":
+            ctx.send_msg("you lose!")
+    else:
+        ctx.send_msg("tie!")
+    ctx.send_msg(f"your play: {play}")
+    ctx.send_msg(f"bot play: {bot_play}")
 
 @bot.command(args=0, aname="cat")
 def cat(ctx):
@@ -117,9 +158,18 @@ def guide(ctx, guide=""):
     else:
         ctx.send_msg("available guides: mod")
 
-@bot.command(args=0, aname="help")
-def help(ctx):
-    ctx.send_msg(help_msg)
+@bot.command(args=1, aname="help")
+def help(ctx, cmd=""):
+    if cmd == "gayometer":
+        ctx.send_msg("gayometer <user>")
+    elif cmd=="guide":
+        ctx.send_msg("guide <guide>")
+    elif cmd=="give_tempadmin":
+        ctx.send_msg("give_tempadmin <user>")
+    elif cmd=="youtube":
+        ctx.send_msg("youtube <user>")
+    else:
+        ctx.send_msg(help_msg)
 
 @bot.command(args=1, aname="give_tempadmin")
 def give_tempadmin(ctx, username):
