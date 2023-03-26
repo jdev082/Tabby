@@ -26,4 +26,4 @@ quotes = [
     "Electron web browsers have literally no purpose, please do not make any!",
     "MikeDEV is a duck confirmed."
 ]
-debug="true"
+debug="false"
