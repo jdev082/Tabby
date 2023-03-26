@@ -113,40 +113,11 @@ def give_tempadmin(ctx, username):
     bot_admins.append(username)
     ctx.send_msg(f"User {username} will be a bot admin until next restart!")
 
-@bot.command(args=2, aname="conf")
-def conf(ctx, conf, val):
-    admin_check(ctx)
-    if conf == "developer":
-        developer = val
-    else:
-        ctx.send_msg("Error, invalid config parameter.")
-        exit()
-    ctx.send_msg(f"Value {conf} set to {val}!")
-
 @bot.command(args=0, aname="restart")
 def restart(ctx):
     admin_check(ctx)
     ctx.send_msg("Restarting...")
     os.execv(sys.executable, ['python3'] + sys.argv)
-
-@bot.command(args=2, aname="config")
-def config(ctx, var, val):
-    admin_check(ctx)
-    ctx.send_msg(f"Changed value of {var} to {val}!")
-    var = val
-
-@bot.command(args=2, aname="say")
-def say(ctx, msg, byp="none"):
-    is_disabled(ctx)
-    if byp != "hm":
-        admin_check(ctx)
-        home_check(ctx)
-    if "@" in msg and byp != "at":
-        ctx.send_msg("Disallowed character: @!")
-        exit()
-    if byp == "at":
-        admin_check(ctx)
-    ctx.send_msg(f"{msg}")
 
 @bot.command(args=0, aname="list")
 def list(ctx):
