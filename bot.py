@@ -43,6 +43,7 @@ def lines(ctx):
 
 @bot.command(args=2, aname="suggest")
 def suggest(ctx, action="post", txt=""):
+    is_disabled(ctx)
     if action == "post":
         with open("suggestions.txt", "a") as f:
          f.write(f"{txt} from {ctx.message.user.username}\n")
