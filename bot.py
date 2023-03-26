@@ -5,8 +5,10 @@ import os
 import platform
 from details import passwordd
 from functions import admin_check, home_check, is_disabled
-from config import license, developer, bot_admins, repo, cat_breeds, quotes
+from config import license, developer, bot_admins, repo, cat_breeds, quotes, debug
 from messages import help_msg
+from PyDictionary import PyDictionary
+dictionary=PyDictionary()
 
 version = open('release.txt', 'r').read()
 
@@ -38,6 +40,17 @@ def setver(ctx, ver):
 @bot.command(args=0, aname="lines")
 def lines(ctx):
     ctx.send_msg(f"I have {lines_count} lines of code!")
+
+@bot.command(args=2, aname="define")
+def define(ctx, word, type="noun"):
+    if type == "noun":
+        meaning = dictionary.meaning(word)['Noun']
+    elif type == "verb":
+        meaning = dictionary.meaning(word)['Verb']
+    else:
+        ctx.send_msg("Invalid type.")
+    ctx.send_msg(f"{word} means {' '.join(meaning)}")
+
 
 @bot.command(args=0, aname="system")
 def system(ctx):
@@ -175,7 +188,10 @@ def stop(ctx):
 def login(bot=bot):
    bot.send_msg(f"Hello, I am Tabby v{version}, and I am a utility bot for Meower. To use me, type @Tabby help for a list of commands.")
 
-bot.callback(login)
+if debug == "false":
+    bot.callback(login)
+elif debug == "true":
+    print("Tabby is running in debug mode.")
 
 try:
     bot.run(
