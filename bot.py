@@ -41,6 +41,30 @@ def setver(ctx, ver):
 def lines(ctx):
     ctx.send_msg(f"I have {lines_count} lines of code!")
 
+@bot.command(args=2, aname="suggest")
+def suggest(ctx, action="post", txt=""):
+    if action == "post":
+        with open("suggestions.txt", "a") as f:
+         f.write(f"{txt} from {ctx.message.user.username}\n")
+        ctx.send_msg("Suggestion posted!")
+        print(f"New suggestion from {ctx.message.user.username}")
+    elif action == "clear":
+        admin_check(ctx)
+        if os.path.exists('suggestions.txt'):
+            os.remove("suggestions.txt")
+            ctx.send_msg("Suggestions cleared!")
+        else:
+            ctx.send_msg("Suggestions already empty...")
+    elif action == "list":
+        if os.path.exists('suggestions.txt'):
+            with open("suggestions.txt") as f:
+                ctx.send_msg(f.read())
+        else:
+            ctx.send_msg("no posts to read...")
+    else:
+        ctx.send_msg("possible actions: post, clear, list")
+
+
 @bot.command(args=2, aname="define")
 def define(ctx, word, type="noun"):
     if type == "noun":
